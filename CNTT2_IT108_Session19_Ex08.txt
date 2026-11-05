@@ -1,0 +1,17 @@
+*Bài 8: Vá Lỗ Hổng Hardcode Secrets Và Thiết Lập Lá Chắn
+**Phần 1: Phân tích hậu quả & Sai lầm kỹ thuật**
+1. **4 Secrets bị lộ & hậu quả:**
+   - `OPENAI_API_KEY`: Bị hacker lấy gọi chùa AI tốn hàng nghìn đô.
+   - `STEAM_WEB_API_KEY`: Bị chiếm quyền thao tác liên quan đến nền tảng game Steam.
+   - `MONGO_URI`: Lộ thông tin kết nối và quyền truy cập toàn bộ cơ sở dữ liệu.
+   - `JWT_SECRET`: Bị lộ khóa mã hóa token, hacker có thể giả mạo tài khoản bất kỳ người dùng nào trong hệ thống.
+2. **Tại sao xóa commit vẫn phải thu hồi (Revoke):**
+   - Vì các bot tự động trên mạng (GitHub Scraper Bot) quét và lưu lại dữ liệu chỉ trong vài giây đến vài phút sau khi code được push lên, nên dù xóa nhanh cỡ nào thì thông tin đã bị kẻ xấu lưu bản sao từ trước[cite: 4, 5].
+
+**Phần 2: Sửa lỗi & Chuẩn hóa an ninh**
+3. **Nội dung tệp `.env` trên máy cục bộ:**
+   ```env
+   OPENAI_API_KEY=sk-proj-...
+   STEAM_WEB_API_KEY=...
+   MONGO_URI=mongodb+srv://...
+   JWT_SECRET=...
